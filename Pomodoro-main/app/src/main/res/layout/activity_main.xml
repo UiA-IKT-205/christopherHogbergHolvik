@@ -10,57 +10,80 @@
         android:id="@+id/countDownView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="27dp"
         android:text="@string/default_time_display"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/startCountdownButton"
+        app:layout_constraintStart_toStartOf="@+id/startCountdownButton"
+        app:layout_constraintTop_toBottomOf="@+id/Reps" />
 
     <Button
         android:id="@+id/startCountdownButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="77dp"
         android:text="@string/startButtonText"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/countDownView" />
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="84dp"
-        android:text="30"
-        app:layout_constraintBaseline_toBaselineOf="@+id/button2"
-        app:layout_constraintStart_toStartOf="parent" />
+    <SeekBar
+        android:id="@+id/WorkseekBar"
+        android:layout_width="244dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="87dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/BreaktextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/WorktextView" />
 
-    <Button
-        android:id="@+id/button2"
+    <TextView
+        android:id="@+id/WorktextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="84dp"
-        android:layout_marginBottom="40dp"
-        android:text="60"
-        app:layout_constraintBottom_toTopOf="@+id/button4"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="90"
-        app:layout_constraintBaseline_toBaselineOf="@+id/button4"
-        app:layout_constraintStart_toStartOf="@+id/button" />
-
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="159dp"
-        android:text="120"
-        app:layout_constraintStart_toStartOf="@+id/button2"
+        android:layout_marginTop="101dp"
+        android:layout_marginBottom="35dp"
+        android:text="Worktime: 15 minutes"
+        app:layout_constraintBottom_toTopOf="@+id/WorkseekBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <SeekBar
+        android:id="@+id/BreakseekBar"
+        android:layout_width="248dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="71dp"
+        app:layout_constraintBottom_toTopOf="@+id/Reps"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/BreaktextView" />
+
+    <TextView
+        android:id="@+id/BreaktextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="33dp"
+        android:text="Breaktime: 10 minutes"
+        app:layout_constraintBottom_toTopOf="@+id/BreakseekBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/WorkseekBar" />
+
+    <EditText
+        android:id="@+id/Reps"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="110dp"
+        android:ems="10"
+        android:inputType="number"
+        android:text=""
+        app:layout_constraintBottom_toTopOf="@+id/countDownView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/BreakseekBar" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
