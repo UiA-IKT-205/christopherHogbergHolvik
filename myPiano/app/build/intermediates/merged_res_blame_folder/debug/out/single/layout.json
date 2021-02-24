@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "C:\\Users\\Christopher\\AndroidStudioProjects\\myPiano\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\fragment_semi_tone_piano_key.xml",
+        "source": "C:\\Users\\Christopher\\AndroidStudioProjects\\myPiano\\app\\src\\main\\res\\layout\\fragment_semi_tone_piano_key.xml"
+    },
+    {
+        "merged": "C:\\Users\\Christopher\\AndroidStudioProjects\\myPiano\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_main.xml",
+        "source": "C:\\Users\\Christopher\\AndroidStudioProjects\\myPiano\\app\\src\\main\\res\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\Christopher\\AndroidStudioProjects\\myPiano\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\fragment_full_tone_piano_key.xml",
+        "source": "C:\\Users\\Christopher\\AndroidStudioProjects\\myPiano\\app\\src\\main\\res\\layout\\fragment_full_tone_piano_key.xml"
+    },
+    {
+        "merged": "C:\\Users\\Christopher\\AndroidStudioProjects\\myPiano\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\fragment_piano.xml",
+        "source": "C:\\Users\\Christopher\\AndroidStudioProjects\\myPiano\\app\\src\\main\\res\\layout\\fragment_piano.xml"
+    }
+]
