@@ -2,43 +2,21 @@ package com.example.huskeliste
 
 import android.os.Bundle
 import android.util.Log
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import android.view.Menu
-import android.view.MenuItem
-import com.example.huskeliste.databinding.ActivityMainBinding
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.activity_main.*
+
 
 class MainActivity : AppCompatActivity() {
     private val TAG:String = "HuskeListe:MainActivity"
-    private lateinit var appBarConfiguration: AppBarConfiguration
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var huskelisteAdapter: HuskelisteAdapter
     private lateinit var auth: FirebaseAuth
+    private lateinit var dbReference: DatabaseReference
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        auth = Firebase.auth
-        signInAnonymously()
-        setSupportActionBar(binding.toolbar)
-
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
-        appBarConfiguration = AppBarConfiguration(navController.graph)
-        setupActionBarWithNavController(navController, appBarConfiguration)
-
-        binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
-    }
 
     private fun signInAnonymously(){
         auth.signInAnonymously().addOnSuccessListener{
@@ -50,25 +28,30 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
-    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        auth = Firebase.auth
+        signInAnonymously()
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
+        huskelisteAdapter = HuskelisteAdapter(mutableListOf())
+        liste_gjenstander.adapter = huskelisteAdapter
+        liste_gjenstander.layoutManager = LinearLayoutManager(this)
+
+        Legg_til_knapp.setOnClickListener {
+            val Huskeliste_Tittel = liste_Tittel.text.toString()
+            if(Huskeliste_Tittel.isNotEmpty()) {
+                val liste = Huskeliste(Huskeliste_Tittel)
+                huskelisteAdapter.leggTilHuskeliste(liste)
+                liste_Tittel.text.clear()
+            }
         }
+        /*slett_Ferdige_knapp.setOnClickListener {
+            huskelisteAdapter.fjernHuskeListe()
+        }
+
+         */
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
-        return navController.navigateUp(appBarConfiguration)
-                || super.onSupportNavigateUp()
-    }
+
 }
