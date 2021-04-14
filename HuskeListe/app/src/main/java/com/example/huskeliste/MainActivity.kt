@@ -1,22 +1,26 @@
 package com.example.huskeliste
 
+import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.tilpasset_liste.*
 import java.io.*
+import java.net.URI
 
 
 class MainActivity : AppCompatActivity() {
@@ -25,7 +29,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseDatabase
     private lateinit var referance: DatabaseReference
-    private val context: Context? = null
+
 
 
     private fun signInAnonymously(){
@@ -45,6 +49,8 @@ class MainActivity : AppCompatActivity() {
 
         auth = Firebase.auth
         signInAnonymously()
+
+
         huskelisteAdapter = HuskelisteAdapter(mutableListOf())
         liste_gjenstander.adapter = huskelisteAdapter
         liste_gjenstander.layoutManager = LinearLayoutManager(this)
@@ -60,8 +66,6 @@ class MainActivity : AppCompatActivity() {
         println("pathRead: " + pathRead)
         println("File: " + File(pathRead,fileNameRead).toString())
         if(File(pathRead,fileNameRead).exists()) {
-
-
             myExternalFile = File(pathRead.toString(), fileNameRead)
             var fileInputStream = FileInputStream(myExternalFile)
             var inputStreamReader: InputStreamReader = InputStreamReader(fileInputStream)
@@ -72,6 +76,7 @@ class MainActivity : AppCompatActivity() {
                 stringBuilder.append(text)
                 val liste = Huskeliste(stringBuilder.toString())
                 huskelisteAdapter.leggTilHuskeliste(liste)
+                stringBuilder.clear()
             }
             fileInputStream.close()
             println("The list is: " + stringBuilder.toString())
@@ -98,10 +103,22 @@ class MainActivity : AppCompatActivity() {
                     println(path)
                     fileName = "$fileName.Lists"
                     File(path,fileName).delete()
+                    val filPlassering = File(path,fileName)
                     FileOutputStream(File(path,fileName),true).bufferedWriter().use { writer ->
                         huskelisteAdapter.huskelister.forEach{
                             writer.write("${it.Tittel}\n")
                             //writer.write("${it.toString()}\n")
+                        }
+
+                        Log.d(TAG,"Uploaded file $filPlassering")
+
+                        val ref = FirebaseStorage.getInstance().reference.child("Lists/${filPlassering.toUri().lastPathSegment}")
+                        var uploadtask = ref.putFile(filPlassering.toUri())
+
+                        uploadtask.addOnSuccessListener{
+                            Log.d(TAG,"Succsesfully uploaded file to fb.")
+                        }.addOnFailureListener{
+                            Log.d(TAG,"Something went wrong when uploading to fb.")
                         }
                     }
                 }
@@ -168,5 +185,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun upload(file:Uri){
+        Log.d(TAG,"Uploaded file $file")
+
+        val ref = FirebaseStorage.getInstance().reference.child("Lists/${file.lastPathSegment}")
+        var uploadtask = ref.putFile(file)
+
+        uploadtask.addOnSuccessListener{
+            Log.d(TAG,"Succsesfully uploaded file to fb.")
+        }.addOnFailureListener{
+            Log.d(TAG,"Something went wrong when uploading to fb.")
+        }
+    }
 
 }
