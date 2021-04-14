@@ -1,8 +1,6 @@
 package com.example.huskeliste
 
-import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -20,7 +18,6 @@ import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.tilpasset_liste.*
 import java.io.*
-import java.net.URI
 
 
 class MainActivity : AppCompatActivity() {
@@ -49,8 +46,6 @@ class MainActivity : AppCompatActivity() {
 
         auth = Firebase.auth
         signInAnonymously()
-
-
         huskelisteAdapter = HuskelisteAdapter(mutableListOf())
         liste_gjenstander.adapter = huskelisteAdapter
         liste_gjenstander.layoutManager = LinearLayoutManager(this)
@@ -82,8 +77,6 @@ class MainActivity : AppCompatActivity() {
             println("The list is: " + stringBuilder.toString())
             Toast.makeText(applicationContext, stringBuilder.toString(), Toast.LENGTH_SHORT).show()
         }
-
-
 
 
         Legg_til_knapp.setOnClickListener {
@@ -134,19 +127,6 @@ class MainActivity : AppCompatActivity() {
                 else{
                     println("Tittel field er tom")
                 }
-                /*
-                writeNewUser("1","false",false)
-
-                data = FirebaseDatabase.getInstance().getReference("Lists")
-                val dbliste = (tittel)
-                dbReference.child(dbliste).setValue(dbliste).addOnSuccessListener {
-                    Log.d("Fungerte:", toString())
-                }.addOnFailureListener {
-                    Log.d("Feilmelding:", toString())
-                }
-
-                 */
-
             }
         }
         try{
@@ -160,42 +140,11 @@ class MainActivity : AppCompatActivity() {
             Log.d("", e.toString())
         }
 
-
-        /*slett_Ferdige_knapp.setOnClickListener {
-            huskelisteAdapter.fjernHuskeListe()
-        }
-         */
     }
     fun openActivity2() {
         val intent = Intent(this, MainActivity2::class.java)
         startActivity(intent)
         println("TEST321")
-    }
-    fun sendData(){
-        val Tittel = "Liste_Navn.text.toString().trim()"
-
-        if(Tittel.isNotEmpty())
-        {
-            var model = Huskeliste("Tittel",false)
-            var id = referance.push().key
-            referance.child(id!!).setValue(model)
-        }
-        else{
-            println("Tittel field er tom")
-        }
-    }
-
-    private fun upload(file:Uri){
-        Log.d(TAG,"Uploaded file $file")
-
-        val ref = FirebaseStorage.getInstance().reference.child("Lists/${file.lastPathSegment}")
-        var uploadtask = ref.putFile(file)
-
-        uploadtask.addOnSuccessListener{
-            Log.d(TAG,"Succsesfully uploaded file to fb.")
-        }.addOnFailureListener{
-            Log.d(TAG,"Something went wrong when uploading to fb.")
-        }
     }
 
 }
