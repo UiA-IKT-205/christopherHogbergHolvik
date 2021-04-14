@@ -30,10 +30,10 @@ class HuskelisteAdapter(
         huskelister.add(huskeliste)
         notifyItemInserted(huskelister.size - 1)
 
-
-        var firebaseDatabase = FirebaseDatabase.getInstance()
-        var databaseReference = firebaseDatabase.getReference()
-        databaseReference.child("Lists").push().setValue("huskeliste.Tittel")
+        // Why this fb real time database work, I will never know.
+        //var firebaseDatabase = FirebaseDatabase.getInstance()
+        //var databaseReference = firebaseDatabase.getReference()
+        //databaseReference.child("Lists").push().setValue("huskeliste.Tittel")
     }
 
     fun fjernHuskeListe() {
@@ -71,7 +71,7 @@ class HuskelisteAdapter(
                 val path = context?.getExternalFilesDir(null)
                 if(fileName.isNotEmpty() && path != null)
                 {
-                    println("Fungerer det?")
+                    println("Huskeliste opplysninger:")
                     println(fileName)
                     println(path)
                     fileName = "$fileName.Lists"
@@ -102,12 +102,6 @@ class HuskelisteAdapter(
                 context.startActivity(intent)
             }
         }
-    }
-    fun openActivity2(holder: HuskelisteViewHolder) {
-        val context = holder.itemView.context
-        val intent = Intent(context, MainActivity2::class.java)
-        context.startActivity(intent)
-        println("TEST321")
     }
 }
 
